@@ -423,8 +423,8 @@ img {
 
 .visual-card {
     position: relative;
-    width: 320px;
-    height: 320px;
+    width: 340px;
+    height: 360px;
 }
 
 .card-glow {
@@ -458,7 +458,7 @@ img {
 
 .stat-item {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .stat-item:last-child {
@@ -479,11 +479,23 @@ img {
     color: var(--primary-color);
 }
 
+.stat-icon {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.stat-icon i {
+    font-size: 36px;
+    color: var(--primary-color);
+}
+
 .stat-label {
     display: block;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-light);
     margin-top: 4px;
+    line-height: 1.4;
+    white-space: nowrap;
 }
 
 .scroll-indicator {
