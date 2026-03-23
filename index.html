@@ -96,9 +96,7 @@
             <div class="about-content">
                 <div class="about-image">
                     <div class="image-frame">
-                        <div class="image-placeholder">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
+                        <img src="source/echo_profile.png" alt="Echo 老师" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
                         <div class="image-decoration"></div>
                     </div>
                     <div class="credential-badges">
@@ -385,9 +383,7 @@
                     </div>
                     <div class="qr-code-placeholder">
                         <div class="qr-box">
-                            <i class="fas fa-qrcode"></i>
-                            <p>微信二维码</p>
-                            <span>请添加您的微信二维码图片</span>
+                            <img src="source/echo_wechat.jpg" alt="微信二维码" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
                         </div>
                     </div>
                 </div>
@@ -398,16 +394,16 @@
                     </div>
                     <form class="contact-form" id="contactForm">
                         <div class="form-group">
-                            <label for="studentName">学员姓名</label>
-                            <input type="text" id="studentName" name="studentName" placeholder="请输入学员姓名（或英文名）" required>
+                            <label for="contactName">称呼</label>
+                            <input type="text" id="contactName" name="contactName" placeholder="请填写学员姓名+与其关系，如：Summer 妈妈" required>
                         </div>
                         <div class="form-group">
                             <label for="phone">联系电话</label>
                             <input type="tel" id="phone" name="phone" placeholder="请输入您的手机号码" required>
                         </div>
                         <div class="form-group">
-                            <label for="parentName">与学员关系</label>
-                            <input type="text" id="parentName" name="parentName" placeholder="请输入和学员的关系，方便称呼">
+                            <label for="wechat">微信号 <span style="color: #999; font-weight: normal;">（如与手机号相同可忽略不填）</span></label>
+                            <input type="text" id="wechat" name="wechat" placeholder="请输入微信号">
                         </div>
                         <div class="form-group">
                             <label for="grade">学员年级</label>
@@ -560,7 +556,7 @@
                     </div>
                     <div class="footer-col">
                         <h4>快速链接</h4>
-                        <ul>parentName
+                        <ul>
                             <li><a href="#about">关于老师</a></li>
                             <li><a href="#pricing">收费标准</a></li>
                             <li><a href="#contact">免费试听</a></li>

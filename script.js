@@ -216,15 +216,24 @@ function initFormHandler() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // 获取表单数据
+            // 获取表单数据（正确处理多选字段）
             const formData = new FormData(form);
             const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    // 如果已存在该key，转换为数组
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
 
             // 简单验证
-            if (!data.parentName || !data.phone) {
+            if (!data.contactName || !data.phone) {
                 showNotification('请填写必填信息', 'error');
                 return;
             }
@@ -295,6 +304,11 @@ async function sendWechatNotification(data) {
         second: '2-digit'
     });
 
+    // 处理多选字段
+    const courses = data.course ? (Array.isArray(data.course) ? data.course.join('、') : data.course) : '未选择';
+    const classSizes = data.classSize ? (Array.isArray(data.classSize) ? data.classSize.join('、') : data.classSize) : '未选择';
+    const classTimes = data.classTime ? (Array.isArray(data.classTime) ? data.classTime.join('、') : data.classTime) : '未选择';
+
     const title = '【Echo English】新的课程咨询';
     const content = `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
@@ -304,23 +318,39 @@ async function sendWechatNotification(data) {
                 </h2>
                 <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
                     <tr>
-                        <td style="padding: 12px 0; color: #718096; width: 100px;">家长姓名</td>
-                        <td style="padding: 12px 0; color: #1a202c; font-weight: 600;">${data.parentName || '未填写'}</td>
+                        <td style="padding: 12px 0; color: #718096; width: 100px;">称呼</td>
+                        <td style="padding: 12px 0; color: #1a202c; font-weight: 600;">${data.contactName || '未填写'}</td>
                     </tr>
                     <tr>
                         <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">联系电话</td>
                         <td style="padding: 12px 0; color: #667eea; font-weight: 600; border-top: 1px solid #e2e8f0;">${data.phone || '未填写'}</td>
                     </tr>
                     <tr>
-                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">学生年龄</td>
-                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.studentAge || '未填写'}</td>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">微信号</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.wechat || '未填写（同手机号）'}</td>
                     </tr>
                     <tr>
-                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">课程类型</td>
-                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.courseType || '未选择'}</td>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">学员年级</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.grade || '未选择'}</td>
                     </tr>
                     <tr>
-                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0; vertical-align: top;">备注信息</td>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0; vertical-align: top;">感兴趣课程</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${courses}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0; vertical-align: top;">意愿班型</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${classSizes}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">是否调剂</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.adjust || '未选择'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0; vertical-align: top;">上课时间</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${classTimes}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0; vertical-align: top;">留言</td>
                         <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.message || '无'}</td>
                     </tr>
                 </table>
