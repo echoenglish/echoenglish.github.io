@@ -197,6 +197,16 @@ function initBackToTop() {
 }
 
 /* ========================================
+   PushPlus 配置
+   请将下面的 TOKEN 替换为你的 PushPlus Token
+   获取方式：微信关注 PushPlus 公众号 -> 功能 -> 我的Token
+======================================== */
+const PUSHPLUS_CONFIG = {
+    token: 'f28b3398bfbe4fff9fb54dccfda37cb3',  // 替换为你的 Token
+    template: 'html'  // 消息模板：html, txt, json
+};
+
+/* ========================================
    表单处理
 ======================================== */
 function initFormHandler() {
@@ -226,18 +236,27 @@ function initFormHandler() {
                 return;
             }
 
-            // 模拟提交成功
+            // 提交表单并发送微信通知
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交中...';
             submitBtn.disabled = true;
 
-            setTimeout(() => {
-                showNotification('提交成功！我们会尽快与您联系', 'success');
-                form.reset();
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
+            // 发送 PushPlus 微信通知
+            sendWechatNotification(data)
+                .then(() => {
+                    showNotification('提交成功！我们会尽快与您联系', 'success');
+                    form.reset();
+                })
+                .catch((error) => {
+                    console.error('推送通知失败:', error);
+                    showNotification('提交成功！我们会尽快与您联系', 'success');
+                    form.reset();
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
         });
 
         // 输入框焦点效果
@@ -251,6 +270,97 @@ function initFormHandler() {
                 this.parentElement.classList.remove('focused');
             });
         });
+    }
+}
+
+/* ========================================
+   发送微信通知 (PushPlus)
+======================================== */
+async function sendWechatNotification(data) {
+    const token = PUSHPLUS_CONFIG.token;
+
+    // 检查 Token 是否已配置
+    if (!token || token === 'YOUR_PUSHPLUS_TOKEN_HERE') {
+        console.warn('PushPlus Token 未配置，请先配置 Token');
+        return Promise.resolve();
+    }
+
+    // 构建消息内容
+    const currentTime = new Date().toLocaleString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+
+    const title = '【Echo English】新的课程咨询';
+    const content = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
+            <div style="background: white; border-radius: 10px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <h2 style="margin: 0 0 20px 0; color: #667eea; font-size: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                    📚 新课程咨询通知
+                </h2>
+                <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; width: 100px;">家长姓名</td>
+                        <td style="padding: 12px 0; color: #1a202c; font-weight: 600;">${data.parentName || '未填写'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">联系电话</td>
+                        <td style="padding: 12px 0; color: #667eea; font-weight: 600; border-top: 1px solid #e2e8f0;">${data.phone || '未填写'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">学生年龄</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.studentAge || '未填写'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0;">课程类型</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.courseType || '未选择'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 0; color: #718096; border-top: 1px solid #e2e8f0; vertical-align: top;">备注信息</td>
+                        <td style="padding: 12px 0; color: #1a202c; border-top: 1px solid #e2e8f0;">${data.message || '无'}</td>
+                    </tr>
+                </table>
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #e2e8f0; color: #a0aec0; font-size: 13px;">
+                    📅 提交时间：${currentTime}
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 15px; color: rgba(255,255,255,0.8); font-size: 12px;">
+                Echo English Studio
+            </div>
+        </div>
+    `;
+
+    // 发送请求到 PushPlus API
+    try {
+        const response = await fetch('http://www.pushplus.plus/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token: token,
+                title: title,
+                content: content,
+                template: 'html'
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.code === 200) {
+            console.log('微信通知发送成功');
+            return result;
+        } else {
+            console.error('微信通知发送失败:', result.msg);
+            throw new Error(result.msg);
+        }
+    } catch (error) {
+        console.error('发送通知时出错:', error);
+        throw error;
     }
 }
 
