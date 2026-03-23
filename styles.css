@@ -384,6 +384,24 @@ img {
     letter-spacing: 1px;
 }
 
+.hero-slogan {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, rgba(237, 137, 54, 0.12) 0%, rgba(246, 173, 85, 0.06) 100%);
+    border-radius: var(--radius-full);
+    display: inline-block;
+    border: 1px solid rgba(237, 137, 54, 0.2);
+}
+
+.hero-slogan i {
+    font-size: 12px;
+    opacity: 0.5;
+    margin: 0 6px;
+}
+
 .hero-features {
     display: flex;
     flex-wrap: wrap;
@@ -763,6 +781,23 @@ img {
 .highlight-text {
     color: var(--primary-color);
     font-weight: 600;
+}
+
+.philosophy-highlight {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--accent-color);
+    line-height: 1.8;
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    background: rgba(237, 137, 54, 0.1);
+    border-radius: var(--radius-sm);
+}
+
+.philosophy-highlight i {
+    font-size: 12px;
+    opacity: 0.6;
+    margin: 0 8px;
 }
 
 /* ========================================
