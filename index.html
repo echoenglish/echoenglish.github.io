@@ -398,16 +398,16 @@
                     </div>
                     <form class="contact-form" id="contactForm">
                         <div class="form-group">
-                            <label for="parentName">家长姓名</label>
-                            <input type="text" id="parentName" name="parentName" placeholder="请输入您的姓名" required>
+                            <label for="studentName">学员姓名</label>
+                            <input type="text" id="studentName" name="studentName" placeholder="请输入学员姓名（或英文名）" required>
                         </div>
                         <div class="form-group">
                             <label for="phone">联系电话</label>
                             <input type="tel" id="phone" name="phone" placeholder="请输入您的手机号码" required>
                         </div>
                         <div class="form-group">
-                            <label for="studentName">学员姓名</label>
-                            <input type="text" id="studentName" name="studentName" placeholder="请输入学员姓名">
+                            <label for="parentName">与学员关系</label>
+                            <input type="text" id="parentName" name="parentName" placeholder="请输入和学员的关系，方便称呼">
                         </div>
                         <div class="form-group">
                             <label for="grade">学员年级</label>
@@ -421,16 +421,104 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="course">感兴趣的课程</label>
-                            <select id="course" name="course">
-                                <option value="">请选择课程</option>
-                                <option value="原版教材体系班">原版教材体系班</option>
-                                <option value="KET/PET考冲班">KET/PET考冲班</option>
-                                <option value="新概念精品班">新概念精品班</option>
-                                <option value="演讲/话剧Workshop">演讲/话剧Workshop</option>
-                                <option value="1对1VIP班">1对1VIP班</option>
-                                <option value="待定，需要咨询">待定，需要咨询</option>
-                            </select>
+                            <label>感兴趣的课程（可多选）</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="course" value="原版教材体系班">
+                                    <span class="checkmark"></span>
+                                    原版教材体系班
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="course" value="KET/PET考冲班">
+                                    <span class="checkmark"></span>
+                                    KET/PET考冲班
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="course" value="新概念精品班">
+                                    <span class="checkmark"></span>
+                                    新概念精品班
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="course" value="演讲/话剧Workshop">
+                                    <span class="checkmark"></span>
+                                    演讲/话剧Workshop
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="course" value="1对1VIP班">
+                                    <span class="checkmark"></span>
+                                    1对1VIP班
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="course" value="待定，需要咨询">
+                                    <span class="checkmark"></span>
+                                    待定，需要咨询
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>意愿报几人班（可多选，以下为5.1前的优惠价）</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="classSize" value="3-4人精品班">
+                                    <span class="checkmark"></span>
+                                    3-4人精品班（¥220/1.5h）
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="classSize" value="5-6人标准班">
+                                    <span class="checkmark"></span>
+                                    5-6人标准班（¥200/1.5h）
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="classSize" value="7-8人小班">
+                                    <span class="checkmark"></span>
+                                    7-8人小班（¥180/1.5h）
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="classSize" value="1对1VIP班">
+                                    <span class="checkmark"></span>
+                                    1对1VIP班（¥360/h）
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>是否愿意调剂到多人班</label>
+                            <div class="radio-group">
+                                <label class="radio-item">
+                                    <input type="radio" name="adjust" value="愿意调剂">
+                                    <span class="radio-mark"></span>
+                                    愿意调剂
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="adjust" value="不愿意调剂">
+                                    <span class="radio-mark"></span>
+                                    不愿意调剂
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="adjust" value="视情况而定">
+                                    <span class="radio-mark"></span>
+                                    视情况而定
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>意愿上课时间（可多选）</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="classTime" value="周六">
+                                    <span class="checkmark"></span>
+                                    周六
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="classTime" value="周日">
+                                    <span class="checkmark"></span>
+                                    周日
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="classTime" value="工作日晚间">
+                                    <span class="checkmark"></span>
+                                    工作日晚间
+                                </label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="message">留言（选填）</label>
@@ -472,7 +560,7 @@
                     </div>
                     <div class="footer-col">
                         <h4>快速链接</h4>
-                        <ul>
+                        <ul>parentName
                             <li><a href="#about">关于老师</a></li>
                             <li><a href="#pricing">收费标准</a></li>
                             <li><a href="#contact">免费试听</a></li>

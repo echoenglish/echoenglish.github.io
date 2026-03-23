@@ -1343,6 +1343,110 @@ img {
     min-height: 100px;
 }
 
+/* 复选框和单选框样式 */
+.checkbox-group,
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.checkbox-item,
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-light);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-medium);
+    transition: var(--transition-fast);
+    user-select: none;
+}
+
+.checkbox-item:hover,
+.radio-item:hover {
+    border-color: var(--primary-light);
+    background: rgba(44, 122, 123, 0.05);
+}
+
+.checkbox-item input[type="checkbox"],
+.radio-item input[type="radio"] {
+    display: none;
+}
+
+.checkbox-item .checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-light);
+    border-radius: 4px;
+    position: relative;
+    transition: var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.checkbox-item input[type="checkbox"]:checked + .checkmark {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkbox-item input[type="checkbox"]:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.radio-item .radio-mark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-light);
+    border-radius: 50%;
+    position: relative;
+    transition: var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.radio-item input[type="radio"]:checked + .radio-mark {
+    border-color: var(--primary-color);
+}
+
+.radio-item input[type="radio"]:checked + .radio-mark::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.checkbox-item:has(input:checked),
+.radio-item:has(input:checked) {
+    background: rgba(44, 122, 123, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* 兼容不支持 :has 的浏览器 */
+.checkbox-item.checked,
+.radio-item.checked {
+    background: rgba(44, 122, 123, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
 /* ========================================
    页脚
 ======================================== */
