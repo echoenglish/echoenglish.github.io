@@ -364,7 +364,7 @@ async function sendWechatNotification(data) {
         </div>
     `;
 
-    // 发送请求到 PushPlus API
+    // 发送请求到 PushPlus API (已修复HTTPS)
     try {
         const response = await fetch('https://www.pushplus.plus/send', {
             method: 'POST',
