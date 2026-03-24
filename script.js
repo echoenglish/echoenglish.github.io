@@ -366,7 +366,7 @@ async function sendWechatNotification(data) {
 
     // 发送请求到 PushPlus API
     try {
-        const response = await fetch('http://www.pushplus.plus/send', {
+        const response = await fetch('https://www.pushplus.plus/send', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
